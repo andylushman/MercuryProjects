@@ -1,0 +1,2 @@
+# MercuryProjects
+Training projects.
