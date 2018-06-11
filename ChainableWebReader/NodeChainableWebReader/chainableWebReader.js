@@ -1,9 +1,9 @@
-var request = require('request-promise');
+const request = require('request-promise');
 
-var github = {
+const github = {
   token: null,
   
-  getUser: function() {
+  getUser: () => {
     return request({
         "method":"GET", 
         "uri": "https://api.github.com/users/andylushman",
@@ -15,11 +15,11 @@ var github = {
     });
   },
   
-  getUserReposUrl: function(user) {
+  getUserReposUrl: (user) => {
     return user.repos_url;
   },
   
-  getUserRepos: function(uri, repos) {
+  getUserRepos: (uri, repos) => {
     return request({
       "method": "GET",
       "uri": uri,
@@ -29,35 +29,35 @@ var github = {
         "Authorization": "andylushman" + github.token,
         "User-Agent": "My little demo app"
       }
-    }).then(function(response) {
+    }).then((response) => {
       if (!repos) {
         repos = [];
       }
       repos = repos.concat(response.body);
       console.log(repos.length + " repos so far");
       
-      if (response.headers.link.split(",").filter(function(link){ return link.match(/rel="next"/) }).length > 0) {
+      if (response.headers.link.split(",").filter((link) => { return link.match(/rel="next"/) }).length > 0) {
         console.log("There is more.");
-        var next = new RegExp(/<(.*)>/).exec(response.headers.link.split(",").filter(function(link){ return link.match(/rel="next"/) })[0])[1];
+        const next = new RegExp(/<(.*)>/).exec(response.headers.link.split(",").filter((link) => { return link.match(/rel="next"/) })[0])[1];
         return github.getUserRepos(next, repos);
       }
       return repos;
     });
   },
   
-  isPublic: function(repo) {
+  isPublic: (repo) => {
     return !repo.private;
   },
   
-  isOriginal: function(repo) {
+  isOriginal: (repo) => {
     return !repo.fork;
   },
   
-  licenseUrl: function(repo) {
+  licenseUrl: (repo) => {
     return repo.contents_url.replace(/\{\+path\}/,"LICENSE");
   },
   
-  checkLicense: function(uri) {
+  checkLicense: (uri) => {
     return request({
       "method": "GET",
       "uri": uri,
@@ -66,18 +66,18 @@ var github = {
         "Authorization": "andylushman" + github.token,
         "User-Agent": "My little demo app"
       }
-    }).then(function(fulfilled_body) {
+    }).then((fulfilled_body) => {
       return false;
-    }, function(rejected_body){
+    }, (rejected_body) => {
       return uri;
     });
   },
   
-  isMissing: function(license) {
+  isMissing: (license) => {
     return license;
   },
   
-  createLicenseLink: function(license) {
+  createLicenseLink: (license) => {
     return license.replace(/https:\/\/api.github.com\/repos\/(.*)\/(.*)\/contents\/LICENSE/, "https://github.com/$1/$2/new/master?filename=LICENSE");
   }
 }
@@ -95,6 +95,6 @@ function main(params) {
     .map(github.createLicenseLink);
 }
 
-main({"token": process.argv[2]}).then(function(result) {
+main({"token": process.argv[2]}).then((result) => {
   console.log(result);
 });
