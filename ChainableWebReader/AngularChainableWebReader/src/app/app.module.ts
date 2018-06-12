@@ -6,6 +6,8 @@ import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
 import { ResultsComponent } from './results/results.component';
 import { SearchbarComponent } from './searchbar/searchbar.component';
+import { GiphyService } from './giphyService/giphy.service';
+import { ResultComponent } from './results/result/result.component';
 
 @NgModule({
   declarations: [
@@ -13,12 +15,13 @@ import { SearchbarComponent } from './searchbar/searchbar.component';
     HeaderComponent,
     ResultsComponent,
     SearchbarComponent,
+    ResultComponent,
   ],
   imports: [
     BrowserModule,
     HttpClientModule,
   ],
-  providers: [],
+  providers: [GiphyService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

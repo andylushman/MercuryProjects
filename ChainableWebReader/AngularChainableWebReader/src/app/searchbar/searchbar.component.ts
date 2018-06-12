@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { GiphyService } from '../giphyService/giphy.service';
 
 @Component({
   selector: 'app-searchbar',
@@ -8,29 +9,23 @@ import { HttpClient } from '@angular/common/http';
 })
 
 export class SearchbarComponent implements OnInit {
-  searchValue= "";
-  queryURL= "";
-  results = [];
+  searchValue: string = "";
 
   constructor(
-    private http: HttpClient
+    private httpClient: HttpClient,
+    private giphyService: GiphyService
   ) { }
 
   ngOnInit() {
   }
 
   search() {
-    this.http.get(this.queryURL)
-    .subscribe(
-      (data: any []) => {
-        console.log(data);
-      }
-    )
+    this.giphyService.changeGiphyUrl(this.searchValue);
+    this.giphyService.getGiphyData();
   }
 
   onUpdateSearchField(event: Event) {
     this.searchValue = (<HTMLInputElement>event.target).value;
-    this.queryURL = `https://api.giphy.com/v1/gifs/search?q=${this.searchValue}&api_key=dc6zaTOxFJmzC&limit=10`;
     console.log(this.searchValue);
   }
 

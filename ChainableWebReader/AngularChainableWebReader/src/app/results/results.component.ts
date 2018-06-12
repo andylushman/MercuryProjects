@@ -1,4 +1,6 @@
-import { Component } from "@angular/core";
+import { Component, OnInit } from "@angular/core";
+import { GiphyService } from "../giphyService/giphy.service";
+import { Result } from "./result";
 
 
 @Component ({
@@ -7,6 +9,17 @@ import { Component } from "@angular/core";
     styleUrls: ['./results.component.css']
 })
 
-export class ResultsComponent {
+export class ResultsComponent implements OnInit {
+    public giphys: Result[];
+
+
+    constructor( private giphyService: GiphyService ){}
+    
+    ngOnInit(){
+        this.giphyService.getGiphyData().subscribe((giphys: Result[]) => {
+            this.giphys = giphys;
+            console.log(this.giphys);
+        })       
+    }
 
 }
