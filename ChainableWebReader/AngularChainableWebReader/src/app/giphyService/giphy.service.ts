@@ -28,3 +28,5 @@ export class GiphyService {
 //Questions
 //1. String interpolation in the URL
 //2. File is red because of .data but it is working fine...
+//3. Overall review of how observables work and how to make the response useable.
+//4. What is the point of having result.ts? Somehow that is a template that makes the observable data useable?

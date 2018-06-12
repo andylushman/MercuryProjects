@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { ResultsComponent } from '../results.component';
+import { Result } from '../result';
 
 @Component({
   selector: 'app-result',
@@ -9,6 +10,8 @@ import { ResultsComponent } from '../results.component';
 export class ResultComponent implements OnInit {
 
   constructor(private results: ResultsComponent) { }
+  @Input() gif: Result;
+
 
   ngOnInit() {
   }
