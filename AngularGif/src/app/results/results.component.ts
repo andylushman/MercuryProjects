@@ -18,7 +18,9 @@ export class ResultsComponent implements OnInit {
     
     ngOnInit(){
         this.giphyService.getGiphyData().subscribe((giphys: Result[]) => {
+            
             this.giphys = giphys;
+
             console.log(this.giphys);
         })       
     }

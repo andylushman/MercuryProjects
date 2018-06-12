@@ -20,13 +20,12 @@ export class SearchbarComponent implements OnInit {
   }
 
   search() {
-    this.giphyService.changeGiphyUrl(this.searchValue);
     this.giphyService.getGiphyData();
   }
 
   onUpdateSearchField(event: Event) {
     this.searchValue = (<HTMLInputElement>event.target).value;
-    console.log(this.searchValue);
+    this.giphyService.changeGiphyUrl(this.searchValue);
   }
 
 }
